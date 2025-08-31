@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Malick - Développeur Full-Stack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #6366f1;
+            --accent: #f59e0b;
+            --accent-gradient: linear-gradient(45deg, #FF6B6B, #FF9E6D);
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --card-bg: #ffffff;
+            --section-bg: #f1f5f9;
+            --gold: #ffd700;
+            --gold-dark: #d4af37;
+            --eldorado-gradient: linear-gradient(45deg, #ffd700, #f59e0b, #ffcc00);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation améliorée */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo::before {
+            content: "</>";
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--eldorado-gradient);
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section améliorée avec vibes Eldorado */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(255, 215, 0, 0.1) 100%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--eldorado-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleAnimation 3s infinite alternate;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 2.5rem;
+            animation: fadeIn 2s;
+            font-weight: 400;
+            max-width: 90%;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeIn 2.5s;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s;
+            display: inline-block;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary {
+            background: var(--eldorado-gradient);
+            color: white;
+            box-shadow: 0 6px 18px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #ffcc00, #ffd700);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        .btn-secondary {
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            background: transparent;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+        }
+        
+        /* Ajout d'animations Eldorado pour transactions vibes */
+        .eldorado-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .eldorado-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: eldoradoRise 5s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes eldoradoRise {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+        
+        /* Photo Profile améliorée */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .profile-photo {
+            width: 380px;
+            height: 380px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: var(--eldorado-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 4px solid white;
+            animation: morphing 10s infinite alternate, pulse 4s infinite alternate;
+            margin: 0 auto;
+            order: 2;
+        }
+        
+        .profile-photo::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* About Section améliorée */
+        .section {
+            padding: 6rem 5%;
+        }
+        
+        .section-bg {
+            background-color: var(--section-bg);
+            border-radius: 30px;
+        }
+        
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            background: var(--eldorado-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: var(--eldorado-gradient);
+            border-radius: 3px;
+            animation: lineAnimation 2s infinite alternate;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        /* Skills Section améliorée */
+        .skills-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            font-size: 1.2rem;
+            color: var(--dark);
+            line-height: 1.8;
+        }
+        
+        /* Progress Bars améliorées avec Eldorado vibes */
+        .skills-container {
+            margin-top: 2.5rem;
+        }
+        
+        .skill {
+            margin-bottom: 2.5rem;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .skill:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            align-items: center;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .skill-name i {
+            color: var(--gold);
+            font-size: 1.4rem;
+        }
+        
+        .skill-percentage {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.2rem;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .progress-bar {
+            height: 14px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            border-radius: 10px;
+            width: 0;
+            transition: width 4s ease-in-out;
+            background: var(--eldorado-gradient);
+            position: relative;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+            z-index: 1;
+            background-size: 20px 20px;
+            animation: move 2s linear infinite;
+            overflow: hidden;
+        }
+        
+        .skill-description {
+            margin-top: 1rem;
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        /* Languages améliorés */
+        .languages {
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .language-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--gold);
+            text-align: center;
+        }
+        
+        /* Nouvelle Section Prestations de Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+            padding: 2rem;
+            text-align: center;
+            animation: cardAnimation 1s forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .service-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        /* Nouvelle Section Formation */
+        .formation-highlight {
+            background: var(--eldorado-gradient);
+            color: white;
+            border-radius: 25px;
+            padding: 5rem;
+            margin: 6rem 0;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3);
+            animation: pulse 5s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .formation-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        .formation-highlight h3 {
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .formation-highlight p {
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.3rem;
+            line-height: 1.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .formation-highlight ul {
+            list-style: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: left;
+        }
+        
+        .formation-highlight li {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .formation-highlight li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--dark);
+        }
+        
+        /* Projects Section améliorée */
+        .projects {
+            background: white;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+            animation: cardAnimation 1s forwards;
+            opacity: 0;
+            transform: translateY(50px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .project-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        .project-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-img {
+            height: 240px;
+            background: var(--eldorado-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+        }
+        
+        .project-content {
+            padding: 2.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        
+        .project-content p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            flex-grow: 1;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+        
+        .project-tag {
+            background: var(--light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .project-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            margin-top: auto;
+        }
+        
+        .project-link:hover {
+            gap: 1.2rem;
+            color: var(--gold-dark);
+        }
+        
+        /* ConnectPlus Highlight amélioré */
+        .connectplus-highlight {
+            background: var(--eldorado-gradient);
+            color: white;
+            border-radius: 25px;
+            padding: 5rem;
+            margin: 6rem 0;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3);
+            animation: pulse 5s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .connectplus-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        .connectplus-highlight h3 {
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .connectplus-highlight p {
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.3rem;
+            line-height: 1.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Contact Section améliorée */
+        .contact {
+            background: var(--eldorado-gradient);
+            color: white;
+            border-radius: 25px;
+            margin: 0 5% 6rem;
+            padding: 6rem;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3);
+            animation: contactAnimation 6s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-0.895 2-2s-0.895-2-2-2-2 0.895-2 2 0.895 2 2 2zM60 91c1.105 0 2-0.895 2-2s-0.895-2-2-2-2 0.895-2 2 0.895 2 2 2zM35 41c1.105 0 2-0.895 2-2s-0.895-2-2-2-2 0.895-2 2 0.895 2 2 2zM12 60c1.105 0 2-0.895 2-2s-0.895-2-2-2-2 0.895-2 2 0.895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .contact h2 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact p {
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: bounce 4s infinite;
+        }
+        
+        .contact-item i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item span {
+            font-size: 1.2rem;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn-light {
+            background: white;
+            color: var(--gold);
+            box-shadow: 0 6px 18px rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+        
+        .btn-light:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Footer amélioré */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 2.2rem;
+            transition: all 0.4s;
+            animation: socialAnimation 3s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-links a:nth-child(1) { animation-delay: 0.2s; }
+        .social-links a:nth-child(2) { animation-delay: 0.4s; }
+        .social-links a:nth-child(3) { animation-delay: 0.6s; }
+        
+        .social-links a:hover {
+            color: var(--gold);
+            transform: translateY(-8px) scale(1.2);
+            background: rgba(255, 215, 0, 0.2);
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Modal Popup amélioré pour la vidéo */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: var(--dark);
+            background: none;
+            border: none;
+            transition: transform 0.3s;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg) scale(1.2);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .video-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Animations améliorées avec Eldorado vibes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes titleAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        @keyframes lineAnimation {
+            0% { width: 120px; }
+            100% { width: 180px; }
+        }
+        
+        @keyframes progressAnimation {
+            from { width: 0; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 25px 50px rgba(255, 215, 0, 0.25); }
+            100% { transform: scale(1.02); box-shadow: 0 30px 60px rgba(255, 215, 0, 0.35); }
+        }
+        
+        @keyframes cardAnimation {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes contactAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        @keyframes socialAnimation {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        @keyframes colorChange {
+            0% { background: var(--primary); }
+            25% { background: var(--secondary); }
+            50% { background: var(--gold); }
+            75% { background: #10b981; }
+            100% { background: var(--primary); }
+        }
+        
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 20px; }
+        }
+        
+        @keyframes morphing {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+            100% { border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%; }
+        }
+        
+        /* Responsive Design amélioré pour 99% mobile */
+        @media (max-width: 900px) {
+            .about-content, .profile-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .profile-section {
+                gap: 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .contact {
+                padding: 4rem 2rem;
+            }
+            
+            .contact-info {
+                gap: 3rem;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .services-grid, .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .hero {
+                padding: 0 3%;
+            }
+            
+            .section {
+                padding: 4rem 3%;
+            }
+            
+            .formation-highlight, .connectplus-highlight {
+                padding: 3rem 2rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Masquer les liens sur petit écran, ou ajouter un menu burger si nécessaire */
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile-photo {
+                width: 280px;
+                height: 280px;
+                order: 1;
+            }
+            
+            .about-text {
+                order: 2;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .connectplus-highlight, .formation-highlight {
+                padding: 3rem 1.5rem;
+            }
+            
+            .contact {
+                padding: 3rem 1.5rem;
+            }
+            
+            .social-links a {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+            }
+            
+            .contact-info {
+                gap: 2rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+                max-width: 95%;
+            }
+            
+            .video-title {
+                font-size: 1.4rem;
+            }
+            
+            .close-modal {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .service-card, .project-card {
+                padding: 1.5rem;
+            }
+            
+            .skill {
+                padding: 1rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .formation-highlight h3, .connectplus-highlight h3 {
+                font-size: 2rem;
+            }
+            
+            .contact h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Check Malick</div>
+        <div class="nav-links">
+            <a href="#about">À propos</a>
+            <a href="#skills">Compétences</a>
+            <a href="#services">Prestations</a>
+            <a href="#formation">Formation</a>
+            <a href="#projects">Projets</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section avec animations Eldorado -->
+    <section class="hero">
+        <div class="eldorado-animation">
+            <!-- Génération dynamique de particules Eldorado -->
+        </div>
+        <div class="hero-content">
+            <h1>Check Malick<br>Développeur Full-Stack Passionné</h1>
+            <p>Je transforme vos idées en expériences digitales exceptionnelles avec un design hors du commun. Spécialiste des solutions web innovantes et performantes, je crée l'impossible.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">Découvrir mes projets</a>
+                <a href="#contact" class="btn btn-secondary">Contactez-moi</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">À propos de moi</h2>
+        
+        <div class="profile-section">
+            <div class="about-text">
+                <h3>Check Malick- Créateur de solutions digitales</h3>
+                <p>Développeur full-stack passionné, je m'épanouis dans la création d'expériences web innovantes. Actuellement en formation en réseaux et télécommunications, je combine expertise technique et vision stratégique pour concevoir des solutions qui marquent les esprits.</p>
+                <p>Mon approche du développement est centrée sur l'utilisateur, avec une attention particulière portée à l'expérience, aux performances et à l'accessibilité. Je m'engage à livrer des produits non seulement fonctionnels mais aussi esthétiques et intuitifs.</p>
+                <p>Mon projet phare, <strong>ConnectPlus</strong>, est une plateforme complète de gestion et monétisation de réseaux WiFi, démontrant ma capacité à relever des défis techniques complexes et à livrer des produits d'exception.</p>
+            </div>
+            <div class="profile-photo">
+                <!-- Remplacez par votre photo -->
+                <img src="votre-photo.jpg" alt="Check Malick"> 
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section section-bg">
+        <h2 class="section-title">Mes Compétences</h2>
+        
+        <p class="skills-intro">Au fil de mes projets et formations, j'ai développé une expertise solide dans plusieurs technologies clés. Je me spécialise dans la création d'applications web complètes, de l'interface utilisateur aux fonctionnalités back-end.</p>
+        
+        <div class="skills-container">
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fab fa-html5"></i> HTML/CSS</span>
+                    <span class="skill-percentage">95%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="95"></div>
+                </div>
+                <p class="skill-description">Maîtrise des standards web, design responsive, animations CSS avancées . Création d'interfaces utilisateur attrayantes et intuitives.</p>
+            </div>
+            
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fab fa-js-square"></i> JavaScript</span>
+                    <span class="skill-percentage">90%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="90"></div>
+                </div>
+                <p class="skill-description">Développement d'applications interactives, manipulation du DOM, utilisation d'API pour des interfaces dynamiques.</p>
+            </div>
+            
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fab fa-php"></i> PHP</span>
+                    <span class="skill-percentage">85%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="85"></div>
+                </div>
+                <p class="skill-description">Développement back-end robuste, création d'APIs RESTful, architecture MVC et intégration avec bases de données. </p>
+            </div>
+            
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fas fa-code"></i> AJAX</span>
+                    <span class="skill-percentage">80%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="80"></div>
+                </div>
+                <p class="skill-description">Création d'applications web dynamiques avec des mises à jour asynchrones pour une expérience utilisateur fluide. Intégration de données en temps réel sans rechargement de page.</p>
+            </div>
+            
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fas fa-network-wired"></i> Réseaux</span>
+                    <span class="skill-percentage">75%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="75"></div>
+                </div>
+                <p class="skill-description">Configuration et gestion d'infrastructures réseau, sécurité des communications et intégration avec applications web. Expertise en optimisation des performances et résolution des problèmes réseau.</p>
+            </div>
+        </div>
+
+        <div class="languages">
+            <h3 class="language-title">Langues</h3>
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fas fa-language"></i> Français</span>
+                    <span class="skill-percentage">100%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="100"></div>
+                </div>
+                <p class="skill-description">Langue maternelle - Excellente maîtrise à l'écrit comme à l'oral pour une communication technique précise. Rédaction de documentation claire et compréhensible.</p>
+            </div>
+            
+            <div class="skill">
+                <div class="skill-info">
+                    <span class="skill-name"><i class="fas fa-language"></i> Anglais</span>
+                    <span class="skill-percentage">40%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" data-width="40"></div>
+                </div>
+                <p class="skill-description">Niveau intermédiaire - Capacité à lire et comprendre la documentation technique et communiquer sur des sujets basiques. En progression constante grâce à une pratique régulière.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle Section Prestations de Services -->
+    <section id="services" class="section section-bg">
+        <h2 class="section-title">Mes Prestations de Services</h2>
+        <p class="skills-intro">Je propose une gamme complète de services de développement web adaptés à vos besoins, avec un design hors du commun et des performances optimales. Chaque projet est réalisé avec passion pour dépasser vos attentes. Mes solutions sont scalables et prêtes pour les grandes entreprises, avec un focus sur la sécurité, l'intégration API et l'optimisation pour des charges élevées.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-desktop service-icon"></i>
+                <h3>Site Vitrine</h3>
+                <p>Présentez votre entreprise avec élégance. Design personnalisé, responsive et optimisé pour le SEO, pour une présence en ligne impactante. Intégration avec CRM pour les leads entreprise.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-shopping-cart service-icon"></i>
+                <h3>E-commerce</h3>
+                <p>Boutique en ligne complète avec gestion des stocks, paiements sécurisés et expérience utilisateur fluide pour booster vos ventes. Scalable pour des milliers de produits et utilisateurs.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-rocket service-icon"></i>
+                <h3>Landing Page</h3>
+                <p>Pages d'atterrissage optimisées pour les conversions, avec animations captivantes et appels à l'action irrésistibles. Intégration analytics pour tracking ROI.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-blog service-icon"></i>
+                <h3>Blog</h3>
+                <p>Plateforme de blogging intuitive avec gestion de contenu, commentaires et intégration SEO pour partager votre expertise. Support multi-utilisateurs pour équipes corporate.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-utensils service-icon"></i>
+                <h3>Site Restaurant</h3>
+                <p>Sites dédiés aux restaurants avec menus interactifs, réservation en ligne et galerie photos pour attirer plus de clients. Intégration avec systèmes de gestion d'entreprise.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-plus-circle service-icon"></i>
+                <h3>Et Bien d'Autres</h3>
+                <p>Applications web sur mesure, intégrations API, optimisations de performance, maintenance et bien plus. Solutions enterprise-grade avec audits de sécurité et support 24/7. Contactez-moi pour discuter de votre projet unique.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nouvelle Section Formation en Ligne -->
+    <section id="formation" class="section">
+        <div class="formation-highlight">
+            <h3>Formation en Ligne : Devenez Développeur Web Pro</h3>
+            <p>Je propose une formation en ligne complète avec accompagnement personnalisé à seulement 98.000 FCFA (environ 149 €). Idéale pour les débutants en programmation, cette formation vous guide pas à pas pour maîtriser les bases et créer votre premier site web.</p>
+            <ul>
+                <li>HTML et CSS : Construisez des interfaces web modernes et responsives.</li>
+                <li>PHP : Apprenez le back-end avec les notions CRUD (Create, Read, Update, Delete).</li>
+                <li>Création d'un site complet : De la conception à la mise en production.</li>
+                <li>Hébergement : Déployez votre site sur un serveur réel.</li>
+                <li>Intégration de l'IA : Techniques pour combiner l'intelligence artificielle à la programmation, automatiser les tâches répétitives et vous concentrer sur les vraies solutions innovantes.</li>
+            </ul>
+            <p>Avec un accompagnement dédié, des sessions Q&R et des projets pratiques, transformez votre passion en carrière. Inscrivez-vous dès maintenant pour un avenir digital brillant !</p>
+            <a href="#contact" class="btn btn-light">S'inscrire à la formation</a>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects">
+        <h2 class="section-title">Mes Réalisations</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="project-content">
+                    <h3>ConnectPlus</h3>
+                    <p>Plateforme complète de gestion et monétisation de réseaux WiFi avec tableau de bord analytique, génération de tickets et suivi financier en temps réel.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">PHP</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">AJAX</span>
+                        <span class="project-tag">MySQL</span>
+                        <span class="project-tag">Réseaux</span>
+                    </div>
+                    <a href="#connectplus" class="project-link">Voir les détails <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="project-content">
+                    <h3>Portfolio Interactif</h3>
+                    <p>Site portfolio élégant avec animations avancées, design responsive et expérience utilisateur optimisée pour mettre en valeur mes compétences.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">Animations</span>
+                    </div>
+                    <a href="#" class="project-link">Explorer le projet <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ConnectPlus Highlight Section -->
+    <section id="connectplus" class="section">
+        <div class="connectplus-highlight">
+            <h3>ConnectPlus - Une Révolution WiFi</h3>
+            <p>J'ai conçu et développé une plateforme complète permettant aux entreprises de monétiser leur infrastructure WiFi. Avec un tableau de bord analytique avancé, un système de génération de tickets et un suivi financier en temps réel, ConnectPlus représente l'aboutissement de mes compétences techniques et de ma vision innovante.</p>
+            <p>Cette solution intègre des technologies modernes pour offrir une expérience utilisateur exceptionnelle et des fonctionnalités robustes de gestion de réseau.</p>
+            <a href="#" class="btn btn-light" id="demo-btn">Découvrir la démo</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Prêt à concrétiser votre vision ?</h2>
+        <p>Je suis passionné par la création de solutions digitales innovantes. Discutons de votre projet et transformons vos idées en réalité exceptionnelle.</p>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>checkmalick29@gmail.com</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>+229 90 46 62 89</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Bénin</span>
+            </div>
+        </div>
+        
+        <div class="contact-buttons">
+            <a href="mailto:checkmalick29@gmail.com" class="btn btn-light">Envoyer un email</a>
+            <a href="tel:+22990466289" class="btn btn-secondary">Appeler maintenant</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/malick-check-249094374?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61580153751691" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/mack04379?igsh=YzljYTk1ODg3Zg==" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">© 2023 Check Malick. Tous droits réservés. Conçu avec passion et expertise.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Popup for Video Demo -->
+    <div class="modal" id="demo-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h4 class="video-title">Démonstration de ConnectPlus</h4>
+            <div class="video-container">
+                <iframe src="https://drive.google.com/file/d/11_Dp11BReLENZJVKsh4txeahRlqNzMwI/preview" title="Démonstration ConnectPlus" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animation des barres de progression
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fonction pour animer les barres de progression
+            function animateProgressBars() {
+                const progressBars = document.querySelectorAll('.progress');
+                
+                progressBars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    
+                    // Réinitialiser l'animation
+                    bar.style.width = '0';
+                    
+                    // Démarrer l'animation après un court délai
+                    setTimeout(() => {
+                        bar.style.width = width + '%';
+                    }, 300);
+                });
+            }
+            
+            // Animation initiale
+            setTimeout(animateProgressBars, 1000);
+            
+            // Répéter l'animation toutes les 5 secondes
+            setInterval(animateProgressBars, 5000);
+            
+            // Observer pour réanimer les barres lorsqu'elles deviennent visibles
+            const progressSection = document.getElementById('skills');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateProgressBars();
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            if (progressSection) {
+                observer.observe(progressSection);
+            }
+            
+            // Animation des éléments au défilement
+            const animateElements = document.querySelectorAll('.project-card, .service-card, .profile-section');
+            
+            const elementObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 1.5s forwards';
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            animateElements.forEach(el => elementObserver.observe(el));
+            
+            // Navigation smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+            
+            // Active nav link on scroll
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100; // Offset pour la nav fixed
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Modal functionality for video demo
+            const demoBtn = document.getElementById('demo-btn');
+            const demoModal = document.getElementById('demo-modal');
+            const closeModal = document.getElementById('close-modal');
+            
+            if (demoBtn && demoModal && closeModal) {
+                demoBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    demoModal.style.display = 'flex';
+                });
+                
+                closeModal.addEventListener('click', function() {
+                    demoModal.style.display = 'none';
+                });
+                
+                demoModal.addEventListener('click', function(e) {
+                    if (e.target === demoModal) {
+                        demoModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Génération de particules Eldorado pour vibes transactions
+            const eldoradoContainer = document.querySelector('.eldorado-animation');
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.classList.add('eldorado-particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                eldoradoContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 8000);
+            }
+            
+            setInterval(createParticle, 300);
+        });
+    </script>
+</body>
+</html>
